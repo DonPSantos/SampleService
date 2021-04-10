@@ -23,6 +23,7 @@ namespace SampleService
             services.Configure<ServiceSettings>(Configuration.GetSection(nameof(ServiceSettings)));
             services.AddScoped<IApiClient, ApiClient>();
             services.AddControllers();
+            services.AddHealthChecks();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SampleService", Version = "v1" });
@@ -45,6 +46,7 @@ namespace SampleService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
