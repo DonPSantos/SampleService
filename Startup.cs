@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SampleService.Models;
 
 namespace SampleService
 {
@@ -22,10 +23,9 @@ namespace SampleService
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.Configure<ServiceSettings>(Configuration.GetSection(nameof(ServiceSettings)));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -33,7 +33,6 @@ namespace SampleService
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
